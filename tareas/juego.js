@@ -1,24 +1,60 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-let x = 200;
-let y = 150;
+const box = 20;
 
-function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+let snake = [{x:200,y:200}];
+let direction = "RIGHT";
 
-    ctx.fillStyle="cyan";
-    ctx.fillRect(x,y,40,40);
+let food = {
+x: Math.floor(Math.random()*20)*box,
+y: Math.floor(Math.random()*20)*box
+};
+
+document.addEventListener("keydown", changeDirection);
+
+function changeDirection(event){
+if(event.key === "ArrowLeft" && direction !== "RIGHT") direction="LEFT";
+if(event.key === "ArrowUp" && direction !== "DOWN") direction="UP";
+if(event.key === "ArrowRight" && direction !== "LEFT") direction="RIGHT";
+if(event.key === "ArrowDown" && direction !== "UP") direction="DOWN";
 }
 
-document.addEventListener("keydown", function(e){
+function draw(){
 
-    if(e.key==="ArrowRight") x+=10;
-    if(e.key==="ArrowLeft") x-=10;
-    if(e.key==="ArrowUp") y-=10;
-    if(e.key==="ArrowDown") y+=10;
+ctx.clearRect(0,0,400,400);
 
-    draw();
-});
+for(let i=0;i<snake.length;i++){
+ctx.fillStyle = i===0 ? "lime" : "green";
+ctx.fillRect(snake[i].x,snake[i].y,box,box);
+}
 
-draw();
+ctx.fillStyle="red";
+ctx.fillRect(food.x,food.y,box,box);
+
+let headX = snake[0].x;
+let headY = snake[0].y;
+
+if(direction==="LEFT") headX-=box;
+if(direction==="RIGHT") headX+=box;
+if(direction==="UP") headY-=box;
+if(direction==="DOWN") headY+=box;
+
+if(headX===food.x && headY===food.y){
+
+food={
+x: Math.floor(Math.random()*20)*box,
+y: Math.floor(Math.random()*20)*box
+};
+
+}else{
+snake.pop();
+}
+
+let newHead={x:headX,y:headY};
+
+snake.unshift(newHead);
+
+}
+
+setInterval(draw,120);
