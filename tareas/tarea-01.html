@@ -13,6 +13,22 @@ canvas{
     margin:40px auto;
     border:3px solid white;
 }
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    background:#28a745;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#218838;
+}
 </style>
 
 </head>
@@ -21,31 +37,15 @@ canvas{
 
 <h1>Juego Snake</h1>
 
-<!-- 🔽 INFO MEJORADA -->
 <h2>Descripción del proyecto</h2>
 <p>
 En esta tarea desarrollé un videojuego clásico tipo "Snake" utilizando HTML, CSS y JavaScript.
-El objetivo es controlar una serpiente que crece al comer comida sin chocar contra las paredes
-ni contra sí misma.
 </p>
 
-<h2>Funcionamiento</h2>
-<ul>
-<li>El jugador controla la dirección con las flechas del teclado</li>
-<li>La serpiente crece al comer alimento</li>
-<li>El juego termina al colisionar con los bordes o consigo misma</li>
-<li>El juego se reinicia automáticamente al perder</li>
-</ul>
-
-<h2>Tecnologías utilizadas</h2>
-<ul>
-<li>HTML para la estructura</li>
-<li>CSS para el diseño visual</li>
-<li>JavaScript para la lógica del juego</li>
-</ul>
-<!-- 🔼 FIN INFO -->
-
 <p>Usa las flechas del teclado</p>
+
+<!-- BOTÓN -->
+<button onclick="iniciarJuego()">Empezar</button>
 
 <canvas id="game" width="400" height="400"></canvas>
 
