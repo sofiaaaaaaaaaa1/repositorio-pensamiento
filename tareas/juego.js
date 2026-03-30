@@ -14,7 +14,7 @@ let gameStarted = false;
 document.addEventListener("keydown", changeDirection);
 
 function changeDirection(event){
-    if(!gameStarted) return; // 🔥 no se mueve si no ha iniciado
+    if(!gameStarted) return;
 
     if(event.key === "ArrowLeft" && direction !== "RIGHT") direction="LEFT";
     if(event.key === "ArrowUp" && direction !== "DOWN") direction="UP";
@@ -22,7 +22,7 @@ function changeDirection(event){
     if(event.key === "ArrowDown" && direction !== "UP") direction="DOWN";
 }
 
-// BOTÓN INICIAR
+// BOTÓN
 function iniciarJuego(){
 
     clearInterval(gameInterval);
@@ -44,13 +44,11 @@ function draw(){
 
     ctx.clearRect(0,0,400,400);
 
-    // snake
     for(let i=0;i<snake.length;i++){
         ctx.fillStyle = i===0 ? "lime" : "green";
         ctx.fillRect(snake[i].x,snake[i].y,box,box);
     }
 
-    // comida
     ctx.fillStyle="red";
     ctx.fillRect(food.x,food.y,box,box);
 
@@ -62,13 +60,11 @@ function draw(){
     if(direction==="UP") headY-=box;
     if(direction==="DOWN") headY+=box;
 
-    // colisión paredes
     if(headX < 0 || headX >= 400 || headY < 0 || headY >= 400){
         terminarJuego();
         return;
     }
 
-    // colisión cuerpo
     for(let i=1;i<snake.length;i++){
         if(headX === snake[i].x && headY === snake[i].y){
             terminarJuego();
@@ -76,7 +72,6 @@ function draw(){
         }
     }
 
-    // comida
     if(headX===food.x && headY===food.y){
         food={
             x: Math.floor(Math.random()*20)*box,
@@ -109,5 +104,5 @@ function mostrarPantallaInicio(){
     ctx.fillText("Presiona 'Empezar'", 110, 200);
 }
 
-// MOSTRAR AL CARGAR
+// SOLO muestra pantalla, NO inicia juego
 mostrarPantallaInicio();
