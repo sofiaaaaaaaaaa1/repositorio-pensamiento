@@ -3,31 +3,33 @@ const ctx = canvas.getContext("2d");
 
 const box = 20;
 
-let snake;
-let direction;
-let food;
+let snake = [];
+let direction = "";
+let food = {};
 
-let gameInterval;
-let gameOver = false;
+let gameInterval = null;
+let gameStarted = false;
 
 // CONTROLES
 document.addEventListener("keydown", changeDirection);
 
 function changeDirection(event){
+    if(!gameStarted) return; // 🔥 no se mueve si no ha iniciado
+
     if(event.key === "ArrowLeft" && direction !== "RIGHT") direction="LEFT";
     if(event.key === "ArrowUp" && direction !== "DOWN") direction="UP";
     if(event.key === "ArrowRight" && direction !== "LEFT") direction="RIGHT";
     if(event.key === "ArrowDown" && direction !== "UP") direction="DOWN";
 }
 
-// INICIAR JUEGO (con botón)
+// BOTÓN INICIAR
 function iniciarJuego(){
 
-    clearInterval(gameInterval); // evita duplicados
+    clearInterval(gameInterval);
 
     snake = [{x:200,y:200}];
     direction = "RIGHT";
-    gameOver = false;
+    gameStarted = true;
 
     food = {
         x: Math.floor(Math.random()*20)*box,
@@ -39,8 +41,6 @@ function iniciarJuego(){
 
 // DIBUJAR
 function draw(){
-
-    if(gameOver) return;
 
     ctx.clearRect(0,0,400,400);
 
@@ -90,15 +90,24 @@ function draw(){
     snake.unshift(newHead);
 }
 
-// TERMINAR JUEGO
+// TERMINAR
 function terminarJuego(){
     clearInterval(gameInterval);
-    gameOver = true;
+    gameStarted = false;
 
     alert("Perdiste 😢");
+
+    mostrarPantallaInicio();
 }
 
 // PANTALLA INICIAL
-ctx.fillStyle = "white";
-ctx.font = "20px Arial";
-ctx.fillText("Presiona 'Empezar'", 110, 200);
+function mostrarPantallaInicio(){
+    ctx.clearRect(0,0,400,400);
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Presiona 'Empezar'", 110, 200);
+}
+
+// MOSTRAR AL CARGAR
+mostrarPantallaInicio();
